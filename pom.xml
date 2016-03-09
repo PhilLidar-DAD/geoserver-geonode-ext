@@ -22,7 +22,7 @@
   </distributionManagement>
 
   <repositories>
-  
+
     <repository>
       <id>boundless</id>
       <name>Boundless Maven Repository</name>
@@ -31,7 +31,7 @@
         <enabled>true</enabled>
       </snapshots>
     </repository>
-    
+
     <repository>
       <id>osgeo</id>
       <name>Open Source Geospatial Foundation Repository</name>
@@ -49,17 +49,22 @@
         <enabled>false</enabled>
       </snapshots>
     </repository>
-  
+
     <repository>
       <id>org.mapfish</id>
       <url>http://dev.mapfish.org/maven/repository</url>
     </repository>
 
+    <repository>
+      <id>maven2</id>
+      <url>http://repo2.maven.org/maven2</url>
+    </repository>
+
   </repositories>
-  
+
   <!-- Codehaus no longer serves up Maven repositories
        and all Codehaus services have been terminated.
-  
+
   <pluginRepositories>
     <pluginRepository>
       <id>codehaus-snapshot-plugins</id>
@@ -85,7 +90,7 @@
       <artifactId>gs-web-sec-core</artifactId>
       <version>${geoserver.version}</version>
     </dependency>
-    
+
     <!--
     <dependency>
       <groupId>org.geoserver.community</groupId>
@@ -166,7 +171,7 @@
         <version>${geoserver.version}</version>
         <scope>runtime</scope>
     </dependency>
-   
+
     <dependency>
         <groupId>org.geoserver.importer</groupId>
         <artifactId>gs-importer-rest</artifactId>
@@ -218,7 +223,7 @@
         <artifactId>gt-metadata</artifactId>
         <version>${geotools.version}</version>
     </dependency>
-    
+
     <dependency>
       <groupId>com.google.guava</groupId>
       <artifactId>guava</artifactId>
@@ -232,14 +237,14 @@
       <version>2.2.3</version>
       <classifier>jdk15</classifier>
     </dependency>
-    
+
     <!-- This dependency is temporary in order to hold a fake process while developing the REST process wrapper -->
     <dependency>
       <groupId>org.geotools</groupId>
       <artifactId>gt-process</artifactId>
       <version>${geotools.version}</version>
     </dependency>
-    
+
     <!-- Updated geogit to geogig
     -->
     <dependency>
@@ -260,7 +265,7 @@
         <exclusion><groupId>org.locationtech.geogig</groupId><artifactId>geogig-osm</artifactId></exclusion>
         <exclusion><groupId>com.jolbox</groupId><artifactId>bonecp</artifactId></exclusion>
       </exclusions>
-    </dependency>    
+    </dependency>
     <dependency>
       <!-- required by gs-geogig but declares it as provided to avoid gt version clashes -->
       <groupId>org.geotools.jdbc</groupId>
@@ -273,7 +278,7 @@
       <artifactId>gt-geopkg</artifactId>
       <version>${geotools.version}</version>
     </dependency>
-        
+
     <!--  test dependencies  -->
     <dependency>
       <groupId>junit</groupId>
@@ -324,8 +329,8 @@
       <artifactId>easymockclassextension</artifactId>
       <version>2.3</version>
       <scope>test</scope>
-    </dependency>    
-    
+    </dependency>
+
     <!-- Jetty runner dependencies -->
     <dependency>
       <groupId>org.mortbay.jetty</groupId>
@@ -346,7 +351,7 @@
       <scope>test</scope>
     </dependency>
   </dependencies>
-  
+
   <properties>
     <geotools.version>13-SNAPSHOT</geotools.version>
     <geoserver.version>2.8-SNAPSHOT</geoserver.version>
@@ -354,7 +359,7 @@
     <gsgeogig.version>2.8-SNAPSHOT</gsgeogig.version>
     <maven.test.search.classdir>true</maven.test.search.classdir>
   </properties>
-  
+
   <profiles>
     <profile>
       <id>arcsde</id>
@@ -393,11 +398,11 @@
            <target>1.7</target>
            <debug>true</debug>
            <encoding>UTF-8</encoding>
-           <!-- 
+           <!--
                On the win32 build box the compiler oom's due to the compiler accumulating
-               too many classes in the permanent generation, similar to GEOT-2462  
+               too many classes in the permanent generation, similar to GEOT-2462
            -->
-           <fork>${fork.javac}</fork> 
+           <fork>${fork.javac}</fork>
            <maxmem>${javac.maxHeapSize}</maxmem>
          </configuration>
        </plugin>
@@ -409,7 +414,7 @@
             <argLine>-XX:MaxPermSize=256m</argLine>
         </configuration>
       </plugin>
-      
+
        <!-- resources -->
        <plugin>
          <groupId>org.apache.maven.plugins</groupId>
@@ -429,7 +434,7 @@
           <stopKey>geonode-stop</stopKey>
           <scanIntervalSeconds>30</scanIntervalSeconds>
           <contextPath>/geoserver</contextPath>
-          
+
           <webApp>${project.build.directory}/geoserver</webApp>
         </configuration>
       </plugin>
@@ -453,12 +458,12 @@
           </execution>
         </executions>
       </plugin>
-      
+
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-war-plugin</artifactId>
         <configuration>
-          <warName>geoserver</warName> 
+          <warName>geoserver</warName>
           <webappDirectory>${project.build.directory}/geoserver</webappDirectory>
           <packagingExcludes>**/data/</packagingExcludes>
           <packagingExcludes>**/gs-web-app*.jar</packagingExcludes>
@@ -508,7 +513,7 @@
             </execution>
         </executions>
     </plugin -->
-      
+
        <!-- code coverage -->
        <plugin>
         <groupId>org.codehaus.mojo</groupId>
