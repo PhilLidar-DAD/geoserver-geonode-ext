@@ -247,6 +247,7 @@
 
     <!-- Updated geogit to geogig
     -->
+    <!--
     <dependency>
       <groupId>org.opengeo.geoserver</groupId>
       <artifactId>gs-geogig</artifactId>
@@ -266,6 +267,7 @@
         <exclusion><groupId>com.jolbox</groupId><artifactId>bonecp</artifactId></exclusion>
       </exclusions>
     </dependency>
+    -->
     <dependency>
       <!-- required by gs-geogig but declares it as provided to avoid gt version clashes -->
       <groupId>org.geotools.jdbc</groupId>
@@ -278,6 +280,7 @@
       <artifactId>gt-geopkg</artifactId>
       <version>${geotools.version}</version>
     </dependency>
+
 
     <!--  test dependencies  -->
     <dependency>
@@ -356,7 +359,7 @@
     <geotools.version>13-SNAPSHOT</geotools.version>
     <geoserver.version>2.8-SNAPSHOT</geoserver.version>
     <jetty.version>6.1.8</jetty.version>
-    <gsgeogig.version>2.8-SNAPSHOT</gsgeogig.version>
+    <gsgeogig.version>2.7-SNAPSHOT</gsgeogig.version>
     <maven.test.search.classdir>true</maven.test.search.classdir>
   </properties>
 
