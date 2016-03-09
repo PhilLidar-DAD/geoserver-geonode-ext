@@ -21,12 +21,12 @@ public class GeoNodeSecurityProvider extends GeoServerSecurityProvider implement
 
     private static Catalog catalog;
 	private GeoNodeSecurityClient client;
-    
+
     @Override
     public Class<GeoNodeAuthenticationProvider> getAuthenticationProviderClass() {
         return GeoNodeAuthenticationProvider.class;
     }
-    
+
     @Override
     public GeoNodeAuthenticationProvider createAuthenticationProvider(
             SecurityNamedServiceConfig config)
@@ -34,25 +34,25 @@ public class GeoNodeSecurityProvider extends GeoServerSecurityProvider implement
         client = configuredClient(((GeoNodeAuthProviderConfig)config).getBaseUrl());
         return new GeoNodeAuthenticationProvider(client);
     }
-    
+
     @Override
     public Class<GeoNodeCookieProcessingFilter> getFilterClass() {
         return GeoNodeCookieProcessingFilter.class;
     }
-    
+
     @Override
     public GeoNodeCookieProcessingFilter createFilter(SecurityNamedServiceConfig config) {
         return new GeoNodeCookieProcessingFilter();
     }
-    
+
     public GeoNodeSecurityClient getSecurityClient() {
         return client;
     }
 
     protected GeoNodeSecurityClient configuredClient(String baseUrl) {
-        HTTPClient httpClient = new HTTPClient(10, 1000, 1000);
+        HTTPClient httpClient = new HTTPClient(10, 10000, 10000);
         String securityClientDatabaseURL = GeoServerExtensions.getProperty("org.geonode.security.databaseSecurityClient.url");
-        
+
         GeoNodeSecurityClient configured;
         String securityClient = "default";
         if (securityClientDatabaseURL == null) {
@@ -68,8 +68,8 @@ public class GeoNodeSecurityProvider extends GeoServerSecurityProvider implement
         Logging.getLogger(getClass()).log(Level.INFO, "using geonode {0} security client", securityClient);
         return configured;
     }
-    
-    @Override 
+
+    @Override
     public void init(GeoServerSecurityManager manager) {
     	try {
     		File cookie = geonodeCookie();
@@ -81,20 +81,20 @@ public class GeoNodeSecurityProvider extends GeoServerSecurityProvider implement
 			throw new RuntimeException("Failed to initialize GeoNode settings", e);
 		}
     }
-    
+
     private static File geonodeCookie() throws IOException {
     	GeoServerResourceLoader loader = getCatalog().getResourceLoader();
     	File geonodeDir = loader.findOrCreateDirectory("geonode");
     	return new File(geonodeDir, "geonode_initialized");
     }
-    
+
     private static void writeCookie(File cookie) throws IOException {
     	FileWriter writer = new java.io.FileWriter(cookie);
     	writer.write("This file was created to flag that the GeoNode extensions have been configured in this server.");
     	writer.write("If you delete it, the GeoNode settings will be applied again the next time you restart GeoServer.");
     	writer.close();
     }
-    
+
     private static void configureGeoNodeSecurity(GeoServerSecurityManager manager) throws Exception {
         addServices(manager);
         configureChains(manager);
@@ -113,7 +113,7 @@ public class GeoNodeSecurityProvider extends GeoServerSecurityProvider implement
         filterConfig.setName("geonodeCookieFilter");
         filterConfig.setClassName(GeoNodeCookieProcessingFilter.class.getCanonicalName());
         manager.saveFilter(filterConfig);
-        
+
         GeoNodeAnonymousAuthFilterConfig anonymousFilterConfig = new GeoNodeAnonymousAuthFilterConfig();
         anonymousFilterConfig.setName("geonodeAnonymousFilter");
         anonymousFilterConfig.setClassName(GeoNodeAnonymousProcessingFilter.class.getCanonicalName());
@@ -123,7 +123,7 @@ public class GeoNodeSecurityProvider extends GeoServerSecurityProvider implement
     private static void configureChains(GeoServerSecurityManager manager) throws Exception {
         SecurityManagerConfig config = manager.getSecurityConfig();
         config.getAuthProviderNames().add(0, "geonodeAuthProvider");
-        
+
 
         GeoServerSecurityFilterChain filterChain = config.getFilterChain();
 
@@ -135,17 +135,17 @@ public class GeoNodeSecurityProvider extends GeoServerSecurityProvider implement
             GeoServerSecurityFilterChain.GWC_REST_CHAIN,
             GeoServerSecurityFilterChain.DEFAULT_CHAIN
         };
-        
+
         for (String chain : geonodeCookieChains) {
             filterChain.insertFirst(chain, "geonodeCookieFilter");
         }
 
         // stick the geonodeAnonymousFilter filter before the anonymous
         filterChain.insertBefore(GeoServerSecurityFilterChain.DEFAULT_CHAIN, "geonodeAnonymousFilter", GeoServerSecurityFilterChain.ANONYMOUS_FILTER);
-        
+
         manager.saveSecurityConfig(config);
     }
-    
+
     private static Catalog getCatalog() {
         if(catalog == null) {
             catalog = (Catalog) GeoServerExtensions.bean( "catalog");
