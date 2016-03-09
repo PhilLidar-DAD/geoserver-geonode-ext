@@ -1,6 +1,12 @@
 geoserver-geonode-ext
 =====================
 
+Build: `mvn -DskipTests clean install war:war`
+Run: `java -jar target/dependency/jetty-runner.jar target/geoserver.war`
+
+ORIGINAL
+--------
+
 GeoNode extends GeoServer with certain JSON, REST, and security capabilities.
 
 Security
