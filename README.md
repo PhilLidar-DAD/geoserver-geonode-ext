@@ -1,7 +1,7 @@
 geoserver-geonode-ext
 =====================
 
-Build: `mvn -DskipTests clean install war:war`
+Build: `mvn clean install war:war`
 
 Run: `java -jar target/dependency/jetty-runner.jar target/geoserver.war`
 
