@@ -356,7 +356,7 @@
 
   <properties>
     <geotools.version>13-SNAPSHOT</geotools.version>
-    <geoserver.version>2.8-SNAPSHOT</geoserver.version>
+    <geoserver.version>2.7-SNAPSHOT</geoserver.version>
     <jetty.version>6.1.8</jetty.version>
     <gsgeogig.version>2.7-SNAPSHOT</gsgeogig.version>
     <maven.test.search.classdir>true</maven.test.search.classdir>
